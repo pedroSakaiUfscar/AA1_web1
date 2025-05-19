@@ -1,0 +1,55 @@
+CREATE DATABASE AA1;
+
+USE AA1;
+
+CREATE TABLE User (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(10) NOT NULL,
+    senha VARCHAR(50) NOT NULL,
+    email VARCHAR(30) NOT NULL UNIQUE,
+    role ENUM('ADMIN', 'TESTER') NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE Project (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(10) NOT NULL,
+    description VARCHAR(300) NOT NULL,
+    date DATE NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE ProjectUser (
+    projeto_id BIGINT NOT NULL,
+    usuario_id BIGINT NOT NULL,
+    PRIMARY KEY (projeto_id, usuario_id),
+    FOREIGN KEY (projeto_id) REFERENCES Project(id),
+    FOREIGN KEY (usuario_id) REFERENCES User(id)
+);
+
+CREATE TABLE Strategy (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(10) NOT NULL,
+    description VARCHAR(300) NOT NULL,
+    examples VARCHAR(300) NOT NULL,
+    tips VARCHAR(300) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE TestSession (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    testerName VARCHAR(10) NOT NULL,
+    userId BIGINT NOT NULL,
+    strategyId BIGINT NOT NULL,
+    projetoId BIGINT NOT NULL,
+    duration INT NOT NULL,
+    description VARCHAR(300),
+    status ENUM('CREATED', 'IN_EXECUTION', 'FINISHED') DEFAULT 'CREATED',
+    creationDateTime DATETIME DEFAULT CURRENT_TIMESTAMP,
+    startDateTime DATETIME,
+    finishDateTime DATETIME,
+    PRIMARY KEY (id),
+    FOREIGN KEY (userId) REFERENCES User(id),
+    FOREIGN KEY (strategyId) REFERENCES Strategy(id),
+    FOREIGN KEY (projetoId) REFERENCES Project(id)
+);
