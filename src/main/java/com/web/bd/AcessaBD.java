@@ -1,5 +1,6 @@
 package com.web.bd;
 
+import com.web.utils.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,9 +12,8 @@ public class AcessaBD {
     public static void main(String[] args) {
         try {
             // Setup:
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/AA1";
-            Connection con = DriverManager.getConnection(url, "root", "root"); // MUDAR PARA SUA SENHA
+            Class.forName(Config.BD_DRIVER);
+            Connection con = DriverManager.getConnection(Config.DB_URL, Config.DB_USERNAME, Config.DB_PASSWORD);
 
             // Print tables:
             Statement stmt = con.createStatement();

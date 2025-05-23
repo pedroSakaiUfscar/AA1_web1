@@ -1,3 +1,8 @@
-/Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/AcessaBD.java
-/Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/AloMundoServlet.java
 /Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/App.java
+/Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/bd/AcessaBD.java
+/Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/model/Strategy.java
+/Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/servlets/common/MainServlet.java
+/Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/servlets/strategy/CreateStrategyServlet.java
+/Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/servlets/strategy/ListStrategiesServlet.java
+/Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/utils/Config.java
+/Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/utils/Routes.java
