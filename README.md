@@ -1,19 +1,20 @@
-# AA1_web1
+## AA1_web1
 Atividade Avaliativa 1 para a matéria de WEB1
 
-Integrantes:
+## Integrantes:
   - Pedro dos Santos Sakai - RA 824387
   - Maria Fernanda Falcão Queiroz e Silva - RA 821032
   - Gabriel Somensi Duarte - RA 824391
   - Thiago Eidi Hamada - RA 812243
 
-Estrutura do projeto:
+## Estrutura do projeto:
 
-main -> java -> com.web -> 
-  |-> bd -> contém uma classe para testar a configuração com o bd e o script para criá-lo localmente
-  |-> model -> contém as classes entidades da aplicação
-  |-> servlets -> contém todos os servlets da aplicação
-  |-> utils
-        |-> Config.java: contém todas constantes relacionas as configurações da aplicação, como as de conexão com bd por exemplo
-        |-> Routes.java: contém todas as rotas dos servlets
-main -> webapp -> views -> contém as páginas JSP da aplicação
+<pre>
+main -> java -> com.web -> <br />
+  |-> bd -> contém uma classe para testar a configuração com o bd e o script para criá-lo localmente <br />
+  |-> model -> contém as classes entidades da aplicação <br />
+  |-> servlets -> contém todos os servlets da aplicação <br />
+  |-> utils <br />
+        |-> Config.java: contém todas constantes relacionas as configurações da aplicação, como as de conexão com bd por exemplo <br />
+        |-> Routes.java: contém todas as rotas dos servlets <br />
+main -> webapp -> views -> contém as páginas JSP da aplicação <br />
