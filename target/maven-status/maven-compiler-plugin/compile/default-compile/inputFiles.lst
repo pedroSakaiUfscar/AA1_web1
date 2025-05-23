@@ -1,6 +1,7 @@
 /Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/App.java
 /Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/bd/AcessaBD.java
 /Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/model/Strategy.java
+/Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/servlets/common/ChangeLanguageServlet.java
 /Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/servlets/common/MainServlet.java
 /Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/servlets/strategy/CreateStrategyServlet.java
 /Users/pedro.sakai/IdeaProjects/AA1_web1/src/main/java/com/web/servlets/strategy/ListStrategiesServlet.java
