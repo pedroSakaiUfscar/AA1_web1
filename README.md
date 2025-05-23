@@ -10,7 +10,7 @@ Atividade Avaliativa 1 para a matéria de WEB1
 ## Estrutura do projeto:
 
 <pre>
-main -> java -> com.web -> <br />
+main -> java -> com.web <br />
   |-> bd -> contém uma classe para testar a configuração com o bd e o script para criá-lo localmente <br />
   |-> model -> contém as classes entidades da aplicação <br />
   |-> servlets -> contém todos os servlets da aplicação <br />
@@ -18,3 +18,6 @@ main -> java -> com.web -> <br />
         |-> Config.java: contém todas constantes relacionas as configurações da aplicação, como as de conexão com bd por exemplo <br />
         |-> Routes.java: contém todas as rotas dos servlets <br />
 main -> webapp -> views -> contém as páginas JSP da aplicação <br />
+main -> resources <br />
+  |-> messages_en_US.properties: contém todas as strings em inglês
+  |-> messages_pt_BR.properties: contém todas as strings em português
