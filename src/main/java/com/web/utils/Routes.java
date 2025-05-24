@@ -7,6 +7,7 @@ public class Routes {
     public static final String LOGIN_ROUTE = "/";
     public static final String INITIAL_ROUTE = "/home";
 
+
     //Admin routes
 
     public static final String REGISTER_ROUTE = "/register"; //
@@ -17,6 +18,8 @@ public class Routes {
 
     public static final String CREATE_STRATEGY_ROUTE = "/strategies/create";
 
+    //Access Denied Route
+    public static final String ACCESS_DENIED_ROUTE = "/access-denied";
 
 
 }
