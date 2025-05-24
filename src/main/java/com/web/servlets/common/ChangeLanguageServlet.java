@@ -23,6 +23,6 @@ public class ChangeLanguageServlet extends HttpServlet {
 
         request.getSession().setAttribute("locale", locale);
         response.setLocale(locale);
-        response.sendRedirect(request.getContextPath() + "/");
+        response.sendRedirect(request.getContextPath() + "/home");
     }
 }
