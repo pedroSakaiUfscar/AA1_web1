@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Arrays" %>
 <%@ page import="com.web.model.Strategy" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -47,6 +48,9 @@
                   <th>
                      <fmt:message key="list_strategy_tips" />
                   </th>
+                  <th>
+                       <fmt:message key="list_strategy_images" />
+                    </th>
                </tr>
             </thead>
             <tbody>
@@ -60,13 +64,30 @@
                   <td><%= strategy.getDescription() %></td>
                   <td><%= strategy.getExamples() %></td>
                   <td><%= strategy.getTips() %></td>
+                  <td>
+                      <%
+                          String images = strategy.getImages();
+                          if (images != null && !images.isEmpty()) {
+                              String[] imageArray = images.split(",");
+                              for (String imageUrl : imageArray) {
+                      %>
+                          <img src="<%= imageUrl.trim() %>" alt="" style="width: 100px; height: auto; margin: 5px;">
+                      <%
+                              }
+                          } else {
+                      %>
+                          <span><fmt:message key="list_no_images" /></span>
+                      <%
+                          }
+                      %>
+                  </td>
                </tr>
                <%
                   }
                   } else {
                   %>
                <tr>
-                  <td colspan="4" style="text-align: center;">
+                  <td colspan="5" style="text-align: center;">
                      <fmt:message key="list_no_strategies" />
                   </td>
                </tr>

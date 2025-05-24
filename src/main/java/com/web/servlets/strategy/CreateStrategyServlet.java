@@ -27,6 +27,7 @@ public class CreateStrategyServlet extends HttpServlet {
         String description = request.getParameter("description");
         String examples = request.getParameter("examples");
         String tips = request.getParameter("tips");
+        String images = request.getParameter("images");
 
         try {
             // Connect to bd:
@@ -34,13 +35,14 @@ public class CreateStrategyServlet extends HttpServlet {
             Connection con = DriverManager.getConnection(Config.DB_URL, Config.DB_USERNAME, Config.DB_PASSWORD);
 
             // Execute the insert:
-            String sql = "INSERT INTO Strategy (name, description, examples, tips) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO Strategy (name, description, examples, tips, images) VALUES (?, ?, ?, ?, ?)";
 
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, name);
             stmt.setString(2, description);
             stmt.setString(3, examples);
             stmt.setString(4, tips);
+            stmt.setString(5, images);
             stmt.executeUpdate();
 
             stmt.close();

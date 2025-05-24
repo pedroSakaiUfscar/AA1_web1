@@ -43,6 +43,12 @@
             <br>
             <textarea id="tips" name="tips" required></textarea>
             <br><br>
+            <label for="images">
+               <fmt:message key="create_label_images" />
+            </label>
+            <br>
+            <textarea id="images" name="images" required></textarea>
+            <br><br>
             <button type="submit">
                <fmt:message key="create_submit_button" />
             </button>
