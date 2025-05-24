@@ -209,7 +209,7 @@
 
         function togglePasswordFields() {
             if (roleSelect.value === 'ADMIN') {
-                passwordFieldsContainer.style.display = 'block'; /
+                passwordFieldsContainer.style.display = 'block';
                 senhaInput.setAttribute('required', 'required');
                 confirmarSenhaInput.setAttribute('required', 'required');
             } else {
