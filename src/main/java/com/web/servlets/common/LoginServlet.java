@@ -23,6 +23,10 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getSession().getAttribute("locale") == null) {
+            request.getSession().setAttribute("locale", new Locale("pt", "BR"));
+        }
+
         Error error = new Error();
         if (request.getParameter("bOK") != null) {
             String email = request.getParameter("email");

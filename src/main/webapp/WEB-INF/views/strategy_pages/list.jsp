@@ -20,16 +20,20 @@
    <body>
       <div class="container">
          <br>
-         <a href="<%= request.getContextPath() %>/">
+         <a href="<%= request.getContextPath() %>/home">
             <fmt:message key="list_back_button" />
          </a>
          <br>
          <br>
-         <form action="strategies/create" method="get">
-            <button type="submit">
-               <fmt:message key="list_create_strategy_button" />
-            </button>
-         </form>
+         <c:choose>
+            <c:when test="${sessionScope.loggedUser != null && sessionScope.loggedUser.role == 'ADMIN'}">
+               <form action="strategies/create" method="get">
+                   <button type="submit">
+                      <fmt:message key="list_create_strategy_button" />
+                   </button>
+               </form>
+            </c:when>
+         </c:choose>
          <h1>
             <fmt:message key="list_page_title" />
          </h1>
