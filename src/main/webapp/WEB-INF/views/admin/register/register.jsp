@@ -190,12 +190,12 @@
         </div>
         <div class="form-group">
             <label for="confirmarSenhaField"><fmt:message key="confirm_password"/></label>
-            <input type="password" id="confirmarSenhaField" name="confirmarSenha" required/>
+            <input type="password" id="confirmarSenhaField" name="confirmarSenha" />
         </div>
     </div>
 
     <div class="form-actions">
-        <input type="submit" name="bOK" value="<fmt:message key="register_button"/>"/>
+        <input type="submit" name="bOK" value=<fmt:message key="register_button"/>/>
     </div>
 
 </form>
@@ -209,7 +209,7 @@
 
         function togglePasswordFields() {
             if (roleSelect.value === 'ADMIN') {
-                passwordFieldsContainer.style.display = 'block'; /
+                passwordFieldsContainer.style.display = 'block';
                 senhaInput.setAttribute('required', 'required');
                 confirmarSenhaInput.setAttribute('required', 'required');
             } else {
