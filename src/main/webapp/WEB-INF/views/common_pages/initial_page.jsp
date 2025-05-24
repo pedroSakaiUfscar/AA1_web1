@@ -10,56 +10,105 @@
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>
-         <fmt:message key="welcome_title" />
-      </title>
+      <title>AA1</title>
       <style>
          body {
          font-family: Arial, sans-serif;
+         background-color: #d3e6f5;
+         margin: 0;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         height: 100vh;
+         }
+         .container {
+         background-color: #ffe8d6;
+         border-radius: 15px;
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+         padding: 30px;
+         }
+         .cards {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 20px;
+         }
+         .card {
+         background-color: #d6f8d6;
+         padding: 20px;
          text-align: center;
-         background-color: #f9f9f9;
-         padding-top: 50px;
-         }
-         h1 {
-         color: #333;
-         }
-         p {
-         color: #555;
+         border-radius: 10px;
          font-size: 18px;
+         transition: all 0.3s ease;
+         text-decoration: none;
+         color: #333;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
          }
-         button {
-         background-color: #4CAF50; /* Verde */
-         color: white;
-         padding: 10px 20px;
-         margin-top: 20px;
-         border: none;
-         border-radius: 5px;
-         font-size: 16px;
-         cursor: pointer;
+         .card:hover {
+         transform: translateY(-5px);
+         background-color: #c8ecc8;
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
          }
-         button:hover {
-         background-color: #45a049;
+         .card p {
+         margin: 0;
+         font-weight: bold;
+         }
+         @media (max-width: 600px) {
+         .cards {
+         grid-template-columns: 1fr;
+         gap: 15px;
+         }
          }
       </style>
    </head>
    <body>
-      <h1>
-         <fmt:message key="welcome_title" />
-      </h1>
-      <p>
-         <fmt:message key="welcome_description" />
-      </p>
-      <form action="<%= request.getContextPath() %>/strategies" method="get">
-         <button type="submit">
-            <fmt:message key="strategies_list_redirect" />
-         </button>
-      </form>
-      <a href="<%= request.getContextPath() %>/setLocale?lang=pt_BR">
-         <fmt:message key="set_portuguese" />
-      </a>
-      <br>
-      <a href="<%= request.getContextPath() %>/setLocale?lang=en_US">
-         <fmt:message key="set_english" />
-      </a>
+      <div class="container">
+         <div class="cards">
+            <a href="<%= request.getContextPath() %>/strategies" class="card">
+               <p>
+                  <fmt:message key="strategy_card_description" />
+               </p>
+            </a>
+            <a href="<%= request.getContextPath() %>/projects" class="card">
+               <p>
+                  <fmt:message key="project_card_description" />
+               </p>
+            </a>
+            <div class="card">
+               <p>
+                  <fmt:message key="user_card_title" />
+                  <strong>${sessionScope.username == null ? "-" : sessionScope.username}</strong>
+               </p>
+            </div>
+            <c:choose>
+               <c:when test="${sessionScope.locale == 'pt_BR'}">
+                  <a href="<%= request.getContextPath() %>/setLocale?lang=en_US" class="card">
+                     <p>
+                        <fmt:message key="locale_card_current_title" />
+                        <br>
+                        <fmt:message key="locale_card_current_description" />
+                     </p>
+                  </a>
+               </c:when>
+               <c:when test="${sessionScope.locale == 'en_US'}">
+                  <a href="<%= request.getContextPath() %>/setLocale?lang=pt_BR" class="card">
+                     <p>
+                        <fmt:message key="locale_card_current_title" />
+                        <br>
+                        <fmt:message key="locale_card_current_description" />
+                     </p>
+                  </a>
+               </c:when>
+               <c:otherwise>
+                  <div class="card">
+                     <p>
+                        <fmt:message key="locale_card_empty" />
+                        <br>
+                        <fmt:message key="locale_card_empty_warning" />
+                     </p>
+                  </div>
+               </c:otherwise>
+            </c:choose>
+         </div>
+      </div>
    </body>
 </html>
