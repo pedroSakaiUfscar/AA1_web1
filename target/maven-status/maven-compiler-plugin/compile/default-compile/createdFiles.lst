@@ -1,9 +1,0 @@
-com/web/servlets/strategy/ListStrategiesServlet.class
-com/web/servlets/common/MainServlet.class
-com/web/bd/AcessaBD.class
-com/web/utils/Config.class
-com/web/servlets/common/ChangeLanguageServlet.class
-com/web/servlets/strategy/CreateStrategyServlet.class
-com/web/model/Strategy.class
-com/web/utils/Routes.class
-com/web/App.class
