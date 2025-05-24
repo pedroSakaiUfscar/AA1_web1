@@ -29,10 +29,11 @@ CREATE TABLE ProjectUser (
 
 CREATE TABLE Strategy (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(10) NOT NULL,
+    name VARCHAR(50) NOT NULL,
     description VARCHAR(300) NOT NULL,
-    examples VARCHAR(300) NOT NULL,
+    examples VARCHAR(1000) NOT NULL,
     tips VARCHAR(300) NOT NULL,
+    images TEXT NULL,
     PRIMARY KEY (id)
 );
 

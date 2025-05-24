@@ -40,8 +40,9 @@ public class ListStrategiesServlet extends HttpServlet {
                 String description = strategyQuery.getString("description");
                 String examples = strategyQuery.getString("examples");
                 String tips = strategyQuery.getString("tips");
+                String images = strategyQuery.getString("images");
 
-                strategies.add(new Strategy(id, name, description, examples, tips));
+                strategies.add(new Strategy(id, name, description, examples, tips, images));
             }
 
             // Set the list as attribute and redirect to strategies list

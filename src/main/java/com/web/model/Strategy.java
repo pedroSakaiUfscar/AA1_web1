@@ -6,13 +6,15 @@ public class Strategy {
     private final String description;
     private final String examples;
     private final String tips;
+    private final String images;
 
-    public Strategy(long id, String name, String description, String examples, String tips) {
+    public Strategy(long id, String name, String description, String examples, String tips, String images) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.examples = examples;
         this.tips = tips;
+        this.images = images;
     }
 
     // Getters
@@ -34,6 +36,10 @@ public class Strategy {
 
     public String getTips() {
         return tips;
+    }
+
+    public String getImages() {
+        return images == null ? "" : images;
     }
 }
 
