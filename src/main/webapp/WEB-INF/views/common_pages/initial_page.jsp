@@ -73,12 +73,35 @@
                   <fmt:message key="project_card_description" />
                </p>
             </a>
-            <div class="card">
-               <p>
-                  <fmt:message key="user_card_title" />
-                  <strong>${sessionScope.username == null ? "-" : sessionScope.username}</strong>
-               </p>
-            </div>
+            <c:choose>
+               <%-- Se o usuário logado for ADMIN --%>
+               <c:when test="${sessionScope.loggedUser != null && sessionScope.loggedUser.role == 'ADMIN'}">
+                  <a href="<%= request.getContextPath() %>/register" class="card register-user-card">
+                     <p>
+                        <fmt:message key="register_new_user_card_title" /> <%-- Ex: "Cadastrar Novo Usuário" --%>
+                     </p>
+                  </a>
+               </c:when>
+
+               <%-- Se o usuário logado for TESTER--%>
+               <c:when test="${sessionScope.loggedUser != null && sessionScope.loggedUser.role == 'TESTER'}">
+                  <div class="card">
+                     <p>
+                        <fmt:message key="user_card_title" />
+                        <strong>${sessionScope.loggedUser.username == null ? "-" : sessionScope.loggedUser.username}</strong>
+                     </p>
+                  </div>
+               </c:when>
+
+               <%-- Se o usuário não estiver logado --%>
+               <c:otherwise>
+                  <a href="<%= request.getContextPath() %>/" class="card login-card"> <%-- Assumindo que a rota de login é "/" --%>
+                     <p>
+                        Login
+                     </p>
+                  </a>
+               </c:otherwise>
+            </c:choose>
             <c:choose>
                <c:when test="${sessionScope.locale == 'pt_BR'}">
                   <a href="<%= request.getContextPath() %>/setLocale?lang=en_US" class="card">
