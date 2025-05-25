@@ -17,6 +17,7 @@ public class Routes {
 
     public static final String CREATE_STRATEGY_ROUTE = "/strategies/create";
 
+    // Session Routes:
 
-
+    public static final String SESSION_ROUTE = "/sessions";
 }

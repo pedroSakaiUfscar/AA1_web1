@@ -54,3 +54,4 @@ CREATE TABLE TestSession (
     FOREIGN KEY (strategyId) REFERENCES Strategy(id),
     FOREIGN KEY (projetoId) REFERENCES Project(id)
 );
+
