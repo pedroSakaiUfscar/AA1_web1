@@ -18,8 +18,10 @@ public class Routes {
 
     public static final String CREATE_STRATEGY_ROUTE = "/strategies/create";
 
-    //Access Denied Route
+    // Access Denied Route
     public static final String ACCESS_DENIED_ROUTE = "/access-denied";
 
+    // Projects:
+    public static final String LIST_PROJECTS_ROUTE = "/projects";
 
 }
