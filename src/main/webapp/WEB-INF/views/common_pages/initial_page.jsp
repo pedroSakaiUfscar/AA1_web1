@@ -179,15 +179,17 @@
             </div>
          </a>
 
-         <a href="<%= request.getContextPath() %>/projects" class="card-link">
-            <div class="card">
-               <div class="card-icon">
-                  <i class="fas fa-project-diagram"></i>
-               </div>
-               <h3 class="card-title"><fmt:message key="project_card_title" /></h3>
-               <p class="card-description"><fmt:message key="project_card_description" /></p>
-            </div>
-         </a>
+        <c:if test="${sessionScope.loggedUser != null}">
+            <a href="<%= request.getContextPath() %>/projects" class="card-link">
+                <div class="card">
+                   <div class="card-icon">
+                      <i class="fas fa-project-diagram"></i>
+                   </div>
+                   <h3 class="card-title"><fmt:message key="project_card_title" /></h3>
+                   <p class="card-description"><fmt:message key="project_card_description" /></p>
+                </div>
+            </a>
+        </c:if>
 
          <c:choose>
             <%-- ADMIN --%>
