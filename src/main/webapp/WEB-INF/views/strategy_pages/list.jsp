@@ -18,7 +18,8 @@
       </title>
    </head>
    <body>
-      <div class="container">
+   <%@ include file="/WEB-INF/views/common_pages/components/header.jsp" %>
+   <div class="container">
          <br>
          <a href="<%= request.getContextPath() %>/home">
             <fmt:message key="list_back_button" />
