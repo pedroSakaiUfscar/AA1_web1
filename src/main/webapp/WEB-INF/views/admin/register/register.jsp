@@ -196,7 +196,7 @@
     </div>
 
     <div class="form-actions">
-        <input type="submit" name="bOK" value=<fmt:message key="register_button"/>/>
+        <input type="submit" name="bOK" value=<fmt:message key="register_button"/>>
     </div>
 
 </form>
