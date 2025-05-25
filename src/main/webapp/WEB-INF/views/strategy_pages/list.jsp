@@ -122,6 +122,24 @@
         .create-btn{
             align-self: end;
         }
+
+        .delete-btn {
+            background: none;
+            color: #ff4d4f;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.2s ease;
+        }
+
+        .delete-btn:hover {
+            color: #e60000;
+            transform: scale(1.1);
+        }
+
+        .delete-btn:active {
+            transform: scale(0.9);
+        }
     </style>
 </head>
 <body>
@@ -141,6 +159,9 @@
             <th><fmt:message key="list_strategy_examples" /></th>
             <th><fmt:message key="list_strategy_tips" /></th>
             <th><fmt:message key="list_strategy_images" /></th>
+            <c:if test="${sessionScope.loggedUser != null && sessionScope.loggedUser.role == 'ADMIN'}">
+                <th><fmt:message key="list_strategy_delete" /></th>
+            </c:if>
         </tr>
         </thead>
         <tbody>
@@ -175,6 +196,16 @@
                     %>
                 </div>
             </td>
+            <c:if test="${sessionScope.loggedUser != null && sessionScope.loggedUser.role == 'ADMIN'}">
+                <td>
+                    <form action="<%= request.getContextPath() %>/strategies/delete" method="post" style="display: inline;" onsubmit="return confirmDelete();">
+                        <input type="hidden" name="id" value="<%= strategy.getId() %>">
+                        <button type="submit" class="delete-btn" title="Delete">
+                            🗑️
+                        </button>
+                    </form>
+                </td>
+            </c:if>
         </tr>
         <%
             }
@@ -196,5 +227,12 @@
         </form>
     </c:if>
 </div>
+
+<script>
+    function confirmDelete() {
+        return confirm("<fmt:message key='list_confirmation_delete' />");
+    }
+</script>
+
 </body>
 </html>
