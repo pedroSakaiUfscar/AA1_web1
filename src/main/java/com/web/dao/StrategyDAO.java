@@ -41,4 +41,19 @@ public class StrategyDAO {
         return strategies;
     }
 
+    public boolean deleteById(long id) {
+        String sql = "DELETE FROM Strategy WHERE id = ?";
+        try (Connection conn = this.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, id);
+            int rowsAffected = stmt.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao deletar estratégia: " + e.getMessage(), e);
+        }
+    }
+
 }
