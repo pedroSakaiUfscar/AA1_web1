@@ -2,7 +2,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Arrays" %>
-<%@ page import="com.web.model.Strategy" %>
+<%@ page import="com.web.model.Project" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale}" />
@@ -131,70 +131,70 @@
         <fmt:message key="list_back_button" />
     </a>
 
-    <h1><fmt:message key="list_page_title" /></h1>
+    <h1>Listagem de Projetos</h1>
+
+    <p>Filtro:</p>
+    <select id="FilterSelector" onchange="changeLanguage(this)" class="language-selector-custom" style="margin-right: 25px;">
+        <option value="name" <c:if test="${sort == 'name'}">selected</c:if>>
+            Ordem alfabética
+        </option>
+
+        <option value="date" <c:if test="${sort == 'date'}">selected</c:if>>
+            Data de criação
+        </option>
+
+        <option value="" <c:if test="${sort == null}">selected</c:if>>
+            Nenhum
+        </option>
+    </select>
+
+    <br>
+    <br>
 
     <table>
         <thead>
         <tr>
-            <th><fmt:message key="list_strategy_name" /></th>
-            <th><fmt:message key="list_strategy_description" /></th>
-            <th><fmt:message key="list_strategy_examples" /></th>
-            <th><fmt:message key="list_strategy_tips" /></th>
-            <th><fmt:message key="list_strategy_images" /></th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Data</th>
         </tr>
         </thead>
         <tbody>
         <%
-            List<Strategy> strategies = (List<Strategy>) request.getAttribute("strategies");
-            if (strategies != null && !strategies.isEmpty()) {
-                for (Strategy strategy : strategies) {
+            List<Project> projects = (List<Project>) request.getAttribute("projects");
+            if (projects != null && !projects.isEmpty()) {
+                for (Project project : projects) {
         %>
         <tr>
-            <td><%= strategy.getName() %></td>
-            <td><%= strategy.getDescription() %></td>
-            <td><%= strategy.getExamples() %></td>
-            <td><%= strategy.getTips() %></td>
-            <td>
-                <div class="image-gallery">
-                    <%
-                        String images = strategy.getImages();
-                        if (images != null && !images.isEmpty()) {
-                            String[] imageArray = images.split(",");
-                            for (String imageUrl : imageArray) {
-                                if (!imageUrl.trim().isEmpty()) {
-                    %>
-                    <img src="<%= imageUrl.trim() %>" alt="Strategy image" style="width: 100px; height: auto;">
-                    <%
-                            }
-                        }
-                    } else {
-                    %>
-                    <span class="no-data"><fmt:message key="list_no_images" /></span>
-                    <%
-                        }
-                    %>
-                </div>
-            </td>
+            <td><%= project.getName() %></td>
+            <td><%= project.getDescription() %></td>
+            <td><%= project.getDate().toString() %></td>
         </tr>
         <%
             }
         } else {
         %>
         <tr>
-            <td colspan="5" class="no-data">
-                <fmt:message key="list_no_strategies" />
+            <td colspan="3" class="no-data">
+                Nenhum projeto encontrado.
             </td>
         </tr>
         <% } %>
         </tbody>
     </table>
-    <c:if test="${sessionScope.loggedUser != null && sessionScope.loggedUser.role == 'ADMIN'}">
-        <form action="strategies/create" method="get" style="display: flex; justify-content: flex-end; margin: 20px 0;">
-            <button type="submit" class="create-btn">
-                <fmt:message key="list_create_strategy_button" />
-            </button>
-        </form>
-    </c:if>
 </div>
+
+<script>
+    function changeLanguage(selectElement) {
+        const selectedSort = selectElement.value;
+
+        if (!selectedSort) {
+            window.location.href = '${pageContext.request.contextPath}/projects';
+        } else {
+            window.location.href = '${pageContext.request.contextPath}/projects?sort=' + selectedSort;
+        }
+    }
+</script>
+
 </body>
 </html>

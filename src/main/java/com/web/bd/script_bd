@@ -1,3 +1,5 @@
+drop database if exists AA1;
+
 CREATE DATABASE AA1;
 
 USE AA1;
