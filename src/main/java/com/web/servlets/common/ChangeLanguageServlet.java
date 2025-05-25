@@ -14,15 +14,16 @@ public class ChangeLanguageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String langParam = request.getParameter("lang");
-        Locale locale;
-
-        locale = switch (langParam) {
+        Locale locale = switch (langParam) {
             case "en_US" -> new Locale("en", "US");
             default -> new Locale("pt", "BR");
         };
 
         request.getSession().setAttribute("locale", locale);
         response.setLocale(locale);
-        response.sendRedirect(request.getContextPath() + "/home");
+
+        // voltar à página anterior
+        String referer = request.getHeader("Referer");
+        response.sendRedirect(referer != null ? referer : request.getContextPath() + "/home");
     }
 }

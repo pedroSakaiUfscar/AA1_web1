@@ -154,6 +154,7 @@
     </style>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/common_pages/components/header.jsp" %>
 <h1><fmt:message key="register_title" /></h1>
 
 <c:if test="${mensagens.existeErros}">

@@ -60,7 +60,8 @@
          }
       </style>
    </head>
-   <body>
+   <body style="display: flex; flex-direction: column">
+   <%@ include file="/WEB-INF/views/common_pages/components/header.jsp" %>
       <div class="container">
          <div class="cards">
             <a href="<%= request.getContextPath() %>/strategies" class="card">

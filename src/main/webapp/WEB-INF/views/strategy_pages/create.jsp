@@ -15,7 +15,8 @@
       </title>
    </head>
    <body>
-      <div class="container">
+   <%@ include file="/WEB-INF/views/common_pages/components/header.jsp" %>
+   <div class="container">
          <h1>
             <fmt:message key="create_title" />
          </h1>
