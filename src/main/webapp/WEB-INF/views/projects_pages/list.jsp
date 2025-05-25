@@ -153,33 +153,41 @@
 
     <table>
         <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th>Data</th>
-        </tr>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Data</th>
+            </tr>
         </thead>
         <tbody>
-        <%
-            List<Project> projects = (List<Project>) request.getAttribute("projects");
-            if (projects != null && !projects.isEmpty()) {
-                for (Project project : projects) {
-        %>
-        <tr>
-            <td><%= project.getName() %></td>
-            <td><%= project.getDescription() %></td>
-            <td><%= project.getDate().toString() %></td>
-        </tr>
-        <%
-            }
-        } else {
-        %>
-        <tr>
-            <td colspan="3" class="no-data">
-                Nenhum projeto encontrado.
-            </td>
-        </tr>
-        <% } %>
+            <%
+                List<Project> projects = (List<Project>) request.getAttribute("projects");
+                if (projects != null && !projects.isEmpty()) {
+                    for (Project project : projects) {
+            %>
+            <tr>
+                <td>
+                    <form action="<%= request.getContextPath() %>/sessions" method="get" style="display:inline;">
+                        <input type="hidden" name="action" value="projectId">
+                        <input type="hidden" name="projectId" value="<%= project.getId() %>">
+                        <button type="submit" style="background:none; border:none; color:#6A0DAD; cursor:pointer; text-decoration:underline;">
+                            <%= project.getName() %>
+                        </button>
+                    </form>
+                </td>
+                <td><%= project.getDescription() %></td>
+                <td><%= project.getDate().toString() %></td>
+            </tr>
+            <%
+                    }
+                } else {
+            %>
+            <tr>
+                <td colspan="3" class="no-data">
+                    Nenhum projeto encontrado.
+                </td>
+            </tr>
+            <% } %>
         </tbody>
     </table>
 </div>

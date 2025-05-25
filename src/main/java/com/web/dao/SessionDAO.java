@@ -38,34 +38,48 @@ public class SessionDAO {
 
         String sql = "SELECT * FROM TestSession WHERE projetoId = ? ORDER BY id";
 
-        try {
-            Connection con = AcessaBD.getConnection();
-            PreparedStatement stmt = con.prepareStatement(sql);
+        try (Connection con = AcessaBD.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
 
-            ResultSet resultSet = stmt.executeQuery(sql);
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                while (resultSet.next()) {
+                    long id_session = resultSet.getLong("id");
+                    String testerName = resultSet.getString("testerName");
+                    long userId = resultSet.getLong("userId");
+                    long strategyId = resultSet.getLong("strategyId");
+                    long projetoId = resultSet.getLong("projetoId");
+                    int duration = resultSet.getInt("duration");
+                    String description = resultSet.getString("description");
+                    String statusStr = resultSet.getString("status");
+                    Timestamp creationTimestamp = resultSet.getTimestamp("creationDateTime");
+                    Timestamp startTimestamp = resultSet.getTimestamp("startDateTime");
+                    Timestamp finishTimestamp = resultSet.getTimestamp("finishDateTime");
 
-            while (resultSet.next()) {
-                long id_session = resultSet.getLong("id");
-                String testerName = resultSet.getString("testerName");
-                long userId = resultSet.getLong("userId");
-                long strategyId = resultSet.getLong("strategyId");
-                long projetoId = resultSet.getLong("projetoId");
-                int duration = resultSet.getInt("duration");
-                String description = resultSet.getString("description");
-                String statusStr = resultSet.getString("status");
-                Timestamp creationTimestamp = resultSet.getTimestamp("creationDateTime");
-                Timestamp startTimestamp = resultSet.getTimestamp("startDateTime");
-                Timestamp finishTimestamp = resultSet.getTimestamp("finishDateTime");
-                TestSessionStatus status = TestSessionStatus.valueOf(statusStr);
+                    TestSessionStatus status = TestSessionStatus.valueOf(statusStr);
 
-                TestSession session = new TestSession(id_session, testerName, userId, strategyId, projetoId, duration, description, status, creationTimestamp.toLocalDateTime(), startTimestamp.toLocalDateTime(), finishTimestamp.toLocalDateTime());
-                listSessions.add(session);
+                    TestSession session = new TestSession(
+                            id_session,
+                            testerName,
+                            userId,
+                            strategyId,
+                            projetoId,
+                            duration,
+                            description,
+                            status,
+                            creationTimestamp != null ? creationTimestamp.toLocalDateTime() : null,
+                            startTimestamp != null ? startTimestamp.toLocalDateTime() : null,
+                            finishTimestamp != null ? finishTimestamp.toLocalDateTime() : null
+                    );
+
+                    listSessions.add(session);
+                }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao inserir TestSession", e);
+            throw new RuntimeException("Erro ao buscar TestSessions", e);
         }
+
         return listSessions;
     }
     public void updateStart(long sessionId, LocalDateTime startDateTime, TestSessionStatus status) {

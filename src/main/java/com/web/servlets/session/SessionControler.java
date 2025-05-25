@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @WebServlet(name = "SessionControler", urlPatterns = {Routes.SESSION_ROUTE})
 public class SessionControler extends HttpServlet {
@@ -27,7 +28,13 @@ public class SessionControler extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/views/session_pages/create_session.jsp").forward(request, response);
+        String action = request.getParameter("action");
+        if ("projectId".equals(action)) {
+            String projectIdParam = request.getParameter("projectId");
+            listSessionsByProject(request, response, projectIdParam);
+        } else {
+            request.getRequestDispatcher("/WEB-INF/views/session_pages/create_session.jsp").forward(request, response);
+        }
     }
 
     @Override
@@ -72,7 +79,7 @@ public class SessionControler extends HttpServlet {
 
         sessionDAO.insert(session);
 
-        response.sendRedirect(request.getContextPath() + "/sessions/success.jsp");
+        response.sendRedirect(request.getContextPath() + Routes.INITIAL_ROUTE);
     }
 
     private void startSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -82,7 +89,7 @@ public class SessionControler extends HttpServlet {
 
         sessionDAO.updateStart(sessionId, startDateTime, newStatus);
 
-        response.sendRedirect(request.getContextPath() + "/sessions/details.jsp?sessionId=" + sessionId);
+        response.sendRedirect(request.getContextPath() + "/WEB-INF/views/sessions/details.jsp?sessionId=" + sessionId);
     }
 
     private void finishSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -93,6 +100,24 @@ public class SessionControler extends HttpServlet {
         sessionDAO.updateFinish(sessionId, finishDateTime, newStatus);
 
         response.sendRedirect(request.getContextPath() + "/sessions/details.jsp?sessionId=" + sessionId);
+    }
+
+    private void listSessionsByProject(HttpServletRequest request, HttpServletResponse response, String projectIdParam) throws ServletException, IOException {
+
+        long projectId;
+        try {
+            projectId = Long.parseLong(projectIdParam);
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "projectId inválido");
+            return;
+        }
+
+        List<TestSession> sessions = sessionDAO.getAllbyProjectID((int) projectId);
+
+        request.setAttribute("sessions", sessions);
+        request.setAttribute("projectId", projectId);
+
+        request.getRequestDispatcher("/WEB-INF/views/session_pages/list_sessions.jsp").forward(request, response);
     }
 
 }
