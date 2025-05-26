@@ -92,7 +92,7 @@ public class RegisterServlet extends HttpServlet {
                 request.setAttribute("param.senha", senha);
                 request.setAttribute("param.confirmarSenha", confirmarSenha);
             }
-            String URL = "/WEB-INF/views/common_pages/users/register/register.jsp";
+            String URL = "/WEB-INF/views/admin/register/register.jsp";
             RequestDispatcher rd = request.getRequestDispatcher(URL);
             rd.forward(request, response);
             return;
@@ -107,7 +107,7 @@ public class RegisterServlet extends HttpServlet {
             dao.insert(newUser);
 
             request.getSession().setAttribute("successMessage", "Cadastro realizado com sucesso! Faça login para continuar.");
-            response.sendRedirect(request.getContextPath() + Routes.LOGIN_ROUTE);
+            response.sendRedirect(request.getContextPath() + Routes.LIST_USERS_ROUTE);
             return;
         } catch (RuntimeException e) {
             error.add("Erro ao cadastrar usuário: " + e.getMessage());

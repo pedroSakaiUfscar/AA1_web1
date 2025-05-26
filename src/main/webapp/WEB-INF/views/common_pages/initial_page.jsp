@@ -194,12 +194,12 @@
          <c:choose>
             <%-- ADMIN --%>
             <c:when test="${sessionScope.loggedUser != null && sessionScope.loggedUser.role == 'ADMIN'}">
-               <a href="<%= request.getContextPath() %>/register" class="card-link">
+               <a href="<%= request.getContextPath() %>/list-users" class="card-link">
                   <div class="card register-user-card">
                      <div class="card-icon">
-                        <i class="fas fa-user-plus"></i>
+                        <i class="fas fa-user-cog"></i>
                      </div>
-                     <h3 class="card-title"><fmt:message key="register_new_user_card_title" /></h3>
+                     <h3 class="card-title"><fmt:message key="users_management_card_title" /></h3>
                      <p class="card-description"><fmt:message key="admin_privileges" /></p>
                   </div>
                </a>

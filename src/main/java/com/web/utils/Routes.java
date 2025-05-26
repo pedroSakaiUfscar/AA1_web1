@@ -10,7 +10,8 @@ public class Routes {
 
     //Admin routes
 
-    public static final String REGISTER_ROUTE = "/register"; //
+    public static final String REGISTER_ROUTE = "/register";
+    public static final String LIST_USERS_ROUTE = "/list-users";
 
     // Strategy Routes:
 

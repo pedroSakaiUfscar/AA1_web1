@@ -64,16 +64,21 @@ public class UserDAO {
         return listaUsuarios;
     }
 
-    public void delete(User usuario) {
-        String sql = "DELETE FROM User where id = ?";
+    public void delete(long userId) {
+        String sql = "DELETE FROM User WHERE id = ?";
+
         try (Connection conn = this.getConnection();
              PreparedStatement statement = conn.prepareStatement(sql)) {
 
-            statement.setLong(1, usuario.getId());
-            statement.executeUpdate();
+            statement.setLong(1, userId);
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new RuntimeException("Nenhum usuário encontrado com o ID: " + userId);
+            }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao deletar usuário: " + e.getMessage(), e);
+            throw new RuntimeException("Erro ao deletar usuário com ID " + userId + ": " + e.getMessage(), e);
         }
     }
 
