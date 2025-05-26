@@ -20,6 +20,9 @@
             padding: 0;
             background-color: #f8f9fa;
             color: #333;
+        }
+
+        body {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -32,13 +35,12 @@
             color: #6A0DAD;
             text-decoration: none;
             font-weight: 600;
-            margin: 20px 0 10px 0;
+            margin: 20px 0 10px 20px;
             align-self: flex-start;
             transition: color 0.3s ease;
         }
         .back-link:hover {
             color: #4B0082;
-            padding: 50px;
             text-decoration: underline;
         }
 
@@ -74,7 +76,7 @@
         }
 
         select, input[type="number"] {
-            width: 100%;
+
             padding: 12px 14px;
             border: 1.8px solid #ccc;
             border-radius: 6px;
@@ -88,6 +90,23 @@
             outline: none;
             box-shadow: 0 0 6px rgba(106, 13, 173, 0.3);
         }
+
+        select {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: #fff;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%234b0082" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+            background-size: 20px auto;
+        }
+
 
         button[type="submit"] {
             background-color: #6A0DAD;
