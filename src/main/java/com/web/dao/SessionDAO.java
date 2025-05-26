@@ -83,7 +83,7 @@ public class SessionDAO {
         return listSessions;
     }
     public void updateStart(long sessionId, LocalDateTime startDateTime, TestSessionStatus status) {
-        String sql = "UPDATE TestSession SET start_datetime = ?, status = ? WHERE id = ?";
+        String sql = "UPDATE TestSession SET startDateTime = ?, status = ? WHERE id = ?";
 
         try (Connection con = AcessaBD.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setTimestamp(1, Timestamp.valueOf(startDateTime));
@@ -96,7 +96,7 @@ public class SessionDAO {
         }
     }
     public void updateFinish(long sessionId, LocalDateTime finishDateTime, TestSessionStatus status) {
-        String sql = "UPDATE TestSession SET finish_datetime = ?, status = ? WHERE id = ?";
+        String sql = "UPDATE TestSession SET finishDateTime = ?, status = ? WHERE id = ?";
 
         try (Connection con = AcessaBD.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setTimestamp(1, Timestamp.valueOf(finishDateTime));
@@ -108,5 +108,44 @@ public class SessionDAO {
             throw new RuntimeException("Erro ao atualizar finishDateTime da TestSession", e);
         }
     }
+
+    public void updateExpiredSessionsByProject(long projectId) {
+        String selectSql = "SELECT id, creationDateTime, duration, status FROM TestSession WHERE projetoId = ? AND status != ?";
+
+        try (Connection con = AcessaBD.getConnection();
+             PreparedStatement selectStmt = con.prepareStatement(selectSql)) {
+
+            selectStmt.setLong(1, projectId);
+            selectStmt.setString(2, TestSessionStatus.FINISHED.name());
+
+            ResultSet rs = selectStmt.executeQuery();
+
+            while (rs.next()) {
+                long sessionId = rs.getLong("id");
+                LocalDateTime creationDateTime = rs.getTimestamp("creationDateTime").toLocalDateTime();
+                int duration = rs.getInt("duration");
+                String status = rs.getString("status");
+
+                LocalDateTime expirationTime = creationDateTime.plusMinutes(duration);
+                LocalDateTime now = LocalDateTime.now();
+
+                if (now.isAfter(expirationTime)) {
+                    // Atualiza essa sessão
+                    String updateSql = "UPDATE TestSession SET finishDateTime = ?, status = ? WHERE id = ?";
+
+                    try (PreparedStatement updateStmt = con.prepareStatement(updateSql)) {
+                        updateStmt.setTimestamp(1, Timestamp.valueOf(now));
+                        updateStmt.setString(2, TestSessionStatus.FINISHED.name());
+                        updateStmt.setLong(3, sessionId);
+
+                        updateStmt.executeUpdate();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar sessões expiradas do projeto", e);
+        }
+    }
+
 
 }

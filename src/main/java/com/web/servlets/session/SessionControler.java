@@ -79,7 +79,7 @@ public class SessionControler extends HttpServlet {
 
         sessionDAO.insert(session);
 
-        response.sendRedirect(request.getContextPath() + Routes.INITIAL_ROUTE);
+        response.sendRedirect(request.getContextPath() + Routes.LIST_PROJECTS_ROUTE);
     }
 
     private void startSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -89,7 +89,8 @@ public class SessionControler extends HttpServlet {
 
         sessionDAO.updateStart(sessionId, startDateTime, newStatus);
 
-        response.sendRedirect(request.getContextPath() + "/WEB-INF/views/sessions/details.jsp?sessionId=" + sessionId);
+        String projectId = request.getParameter("projectId");
+        response.sendRedirect(request.getContextPath() + "/sessions?action=projectId&projectId=" + projectId);
     }
 
     private void finishSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -99,7 +100,8 @@ public class SessionControler extends HttpServlet {
 
         sessionDAO.updateFinish(sessionId, finishDateTime, newStatus);
 
-        response.sendRedirect(request.getContextPath() + "/sessions/details.jsp?sessionId=" + sessionId);
+        String projectId = request.getParameter("projectId");
+        response.sendRedirect(request.getContextPath() + "/sessions?action=projectId&projectId=" + projectId);
     }
 
     private void listSessionsByProject(HttpServletRequest request, HttpServletResponse response, String projectIdParam) throws ServletException, IOException {
@@ -112,7 +114,11 @@ public class SessionControler extends HttpServlet {
             return;
         }
 
+        sessionDAO.updateExpiredSessionsByProject((int) projectId);
+
         List<TestSession> sessions = sessionDAO.getAllbyProjectID((int) projectId);
+
+
 
         request.setAttribute("sessions", sessions);
         request.setAttribute("projectId", projectId);

@@ -63,6 +63,9 @@ public class TestSession {
     public TestSessionStatus getStatus() {
         return status;
     }
+    public String getStatusName() {
+        return status.name();
+    }
 
     public LocalDateTime getCreationDateTime() {
         return creationDateTime;

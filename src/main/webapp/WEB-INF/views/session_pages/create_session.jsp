@@ -83,7 +83,7 @@
 </head>
 <body>
 
-    <h1><fmt:message key="create_title" /></h1>
+    <h1><fmt:message key="create_title_session" /></h1>
 
     <form action="<%= request.getContextPath() %>/sessions" method="post">
         <input type="hidden" name="action" value="create" />
@@ -106,7 +106,7 @@
         <label for="projetoId">
             <fmt:message key="projeto_id" />
         </label>
-        <input type="text" id="projetoId" name="projetoId" />
+        <input type="text" id="projetoId" name="projetoId" value="${param.projectId}" readonly />
 
         <button type="submit">
             <fmt:message key="create_session_submit_button" />
