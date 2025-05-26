@@ -147,5 +147,61 @@ public class SessionDAO {
         }
     }
 
+    public void updateDescription(long sessionId, String description) {
+        String sql = "UPDATE TestSession SET description = ? WHERE id = ?";
 
+        try (Connection con = AcessaBD.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setString(1, description);
+            stmt.setLong(2, sessionId);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar descrição da TestSession", e);
+        }
+    }
+
+    public TestSession getById(long sessionId) {
+        String sql = "SELECT * FROM TestSession WHERE id = ?";
+        try (Connection con = AcessaBD.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setLong(1, sessionId);
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    String testerName = resultSet.getString("testerName");
+                    long userId = resultSet.getLong("userId");
+                    long strategyId = resultSet.getLong("strategyId");
+                    long projetoId = resultSet.getLong("projetoId");
+                    int duration = resultSet.getInt("duration");
+                    String description = resultSet.getString("description");
+                    String statusStr = resultSet.getString("status");
+                    Timestamp creationTimestamp = resultSet.getTimestamp("creationDateTime");
+                    Timestamp startTimestamp = resultSet.getTimestamp("startDateTime");
+                    Timestamp finishTimestamp = resultSet.getTimestamp("finishDateTime");
+
+                    TestSessionStatus status = TestSessionStatus.valueOf(statusStr);
+
+                    return new TestSession(
+                            sessionId,
+                            testerName,
+                            userId,
+                            strategyId,
+                            projetoId,
+                            duration,
+                            description,
+                            status,
+                            creationTimestamp != null ? creationTimestamp.toLocalDateTime() : null,
+                            startTimestamp != null ? startTimestamp.toLocalDateTime() : null,
+                            finishTimestamp != null ? finishTimestamp.toLocalDateTime() : null
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar TestSession por ID", e);
+        }
+        return null;
+    }
 }

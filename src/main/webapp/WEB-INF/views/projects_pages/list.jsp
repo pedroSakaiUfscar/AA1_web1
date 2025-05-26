@@ -158,7 +158,7 @@
                 if (projects != null && !projects.isEmpty()) {
                     for (Project project : projects) {
             %>
-            <tr onclick="window.location.href='<%= request.getContextPath() %>/sessions?action=projectId&projectId=<%= project.getId() %>'">
+            <tr onclick="window.location.href='<%= request.getContextPath() %>/sessions?action=listar_session&projectId=<%= project.getId() %>'">
                 <td><%= project.getName() %></td>
                 <td><%= project.getDescription() %></td>
                 <td><%= project.getDate().toString() %></td>

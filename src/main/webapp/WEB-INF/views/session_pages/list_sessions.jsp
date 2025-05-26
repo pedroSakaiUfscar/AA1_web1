@@ -112,11 +112,11 @@
 
 <%@ include file="/WEB-INF/views/common_pages/components/header.jsp" %>
 
+
 <div class="container">
     <a href="<%= request.getContextPath() %>/projects" class="back-link">
         <fmt:message key="list_back_button" />
     </a>
-
     <h1><fmt:message key="list_sessions_title" /></h1>
     <a href="<%= request.getContextPath() %>/sessions?projectId=${param.projectId}" class="button">
         <fmt:message key="create_session_button" />
@@ -128,7 +128,6 @@
                 <th><fmt:message key="session_id" /></th>
                 <th><fmt:message key="tester_name" /></th>
                 <th><fmt:message key="status" /></th>
-                <th><fmt:message key="description_session" /></th>
                 <th><fmt:message key="duration_session" /></th>
                 <th><fmt:message key="creation_date" /></th>
                 <th><fmt:message key="start_date" /></th>
@@ -138,17 +137,18 @@
         </thead>
         <tbody>
             <c:forEach var="session" items="${sessions}">
-                <tr>
+                <tr onclick="location.href='<%= request.getContextPath() %>/sessions?action=view_session&sessionId=${session.id}&projectId=${param.projectId}'">
                     <td>${session.id}</td>
                     <td>${session.testerName}</td>
                     <td>${session.status}</td>
-                    <td>${session.description}</td>
                     <td>${session.duration}</td>
-                    <td>${session.creationDateTime}</td>
+                    <td>
+                        <fmt:formatDate value="${session.creationDate}" pattern="dd/MM/yyyy HH:mm:ss" />
+                    </td>
                     <td>
                         <c:choose>
                             <c:when test="${not empty session.startDateTime}">
-                                ${session.startDateTime}
+                                <fmt:formatDate value="${session.startDate}" pattern="dd/MM/yyyy HH:mm:ss" />
                             </c:when>
                             <c:otherwise>-</c:otherwise>
                         </c:choose>
@@ -156,7 +156,7 @@
                     <td>
                         <c:choose>
                             <c:when test="${not empty session.finishDateTime}">
-                                ${session.finishDateTime}
+                                <fmt:formatDate value="${session.finishDate}" pattern="dd/MM/yyyy HH:mm:ss" />
                             </c:when>
                             <c:otherwise>-</c:otherwise>
                         </c:choose>
@@ -207,6 +207,8 @@
         window.location.reload();
     }
     setInterval(fetchSessions, 10000);
+    const sessions = ${sessionsJson};
+
 </script>
 
 </body>

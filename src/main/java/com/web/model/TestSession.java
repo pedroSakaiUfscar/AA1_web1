@@ -1,6 +1,9 @@
 package com.web.model;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 
 public class TestSession {
     private final long id;
@@ -63,6 +66,7 @@ public class TestSession {
     public TestSessionStatus getStatus() {
         return status;
     }
+
     public String getStatusName() {
         return status.name();
     }
@@ -79,7 +83,7 @@ public class TestSession {
         return finishDateTime;
     }
 
-    //Setters
+    // Setters
     public void setStartDateTime(LocalDateTime startDateTime) {
         this.startDateTime = startDateTime;
     }
@@ -87,4 +91,17 @@ public class TestSession {
     public void setStatus(TestSessionStatus status) {
         this.status = status;
     }
+
+    public Date getCreationDate() {
+        return creationDateTime == null ? null : Date.from(creationDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public Date getStartDate() {
+        return startDateTime == null ? null : Date.from(startDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public Date getFinishDate() {
+        return finishDateTime == null ? null : Date.from(finishDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
 }

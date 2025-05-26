@@ -56,4 +56,29 @@ public class StrategyDAO {
         }
     }
 
+    public Strategy getById(long id) {
+        String sql = "SELECT * FROM Strategy WHERE id = ?";
+        try (Connection conn = this.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, id);
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    String name = resultSet.getString("name");
+                    String description = resultSet.getString("description");
+                    String examples = resultSet.getString("examples");
+                    String tips = resultSet.getString("tips");
+                    String images = resultSet.getString("images");
+
+                    return new Strategy(id, name, description, examples, tips, images);
+                } else {
+                    return null;  // Não encontrado
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar estratégia: " + e.getMessage(), e);
+        }
+    }
+
 }
