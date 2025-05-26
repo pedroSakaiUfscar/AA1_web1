@@ -43,7 +43,7 @@
             padding: 15px 30px;
             border-bottom: 1px solid #dee2e6;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
             width: 100%;
             position: absolute;
@@ -67,27 +67,39 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
+        .right-wrapper{
+            display: flex;
+        }
+        .home-link {
+            text-decoration: none;
+            color: #6A0DAD;
+            font-size: 24px;
+        }
     </style>
 </head>
 <body>
 
 <nav>
-    <select id="languageSelector" onchange="changeLanguage(this)" class="language-selector-custom" style="margin-right: 25px;">
-        <option value="pt_BR" <c:if test="${sessionScope.locale.toString() == 'pt_BR' || sessionScope.locale.toString() == 'pt'}">selected</c:if>>
-            <fmt:message key="portuguese" />
-        </option>
-        <option value="en_US" <c:if test="${sessionScope.locale.toString() == 'en_US' || sessionScope.locale.toString() == 'en'}">selected</c:if>>
-            <fmt:message key="english" />
-        </option>
-    </select>
+    <a href="<%= request.getContextPath() %>/home" class="home-link">
+        <h3 style="margin: 0;">HOME</h3>
+    </a>    <div class="right-wrapper">
+        <select id="languageSelector" onchange="changeLanguage(this)" class="language-selector-custom" style="margin-right: 25px;">
+            <option value="pt_BR" <c:if test="${sessionScope.locale.toString() == 'pt_BR' || sessionScope.locale.toString() == 'pt'}">selected</c:if>>
+                <fmt:message key="portuguese" />
+            </option>
+            <option value="en_US" <c:if test="${sessionScope.locale.toString() == 'en_US' || sessionScope.locale.toString() == 'en'}">selected</c:if>>
+                <fmt:message key="english" />
+            </option>
+        </select>
 
-    <c:if test="${not empty sessionScope.loggedUser}">
-        <a href="${pageContext.request.contextPath}/logout">
-            <button type="button">
-                <fmt:message key="logout" />
-            </button>
-        </a>
-    </c:if>
+        <c:if test="${not empty sessionScope.loggedUser}">
+            <a href="${pageContext.request.contextPath}/logout">
+                <button type="button">
+                    <fmt:message key="logout" />
+                </button>
+            </a>
+        </c:if>
+    </div>
 </nav>
 <hr style="margin-top: 75px;"/>
 
