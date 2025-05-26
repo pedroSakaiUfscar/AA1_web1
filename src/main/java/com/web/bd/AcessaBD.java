@@ -84,4 +84,17 @@ public class AcessaBD {
             System.out.println("O comando SQL não pode ser executado!");
         }
     }
+
+    public static Connection getConnection() throws SQLException {
+        try {
+            Class.forName(Config.BD_DRIVER);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Driver não encontrado", e);
+        }
+        return DriverManager.getConnection(
+                Config.DB_URL,
+                Config.DB_USERNAME,
+                Config.DB_PASSWORD
+        );
+    }
 }

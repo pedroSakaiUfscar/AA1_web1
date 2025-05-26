@@ -1,3 +1,5 @@
+drop database if exists AA1;
+
 CREATE DATABASE AA1;
 
 USE AA1;
@@ -53,4 +55,54 @@ CREATE TABLE TestSession (
     FOREIGN KEY (userId) REFERENCES User(id),
     FOREIGN KEY (strategyId) REFERENCES Strategy(id),
     FOREIGN KEY (projetoId) REFERENCES Project(id)
+);
+
+
+INSERT INTO Strategy (name, description, examples, tips, images)
+VALUES (
+    'Equivalence Partitioning',
+    'Técnica que divide entradas em partições válidas e inválidas para reduzir o número de casos de teste.',
+    'Exemplo: Para idade válida entre 18-65, partições seriam <18 (inválida), 18-65 (válida), >65 (inválida).',
+    'Certifique-se de testar pelo menos um valor de cada partição.',
+    NULL
+);
+
+INSERT INTO Strategy (name, description, examples, tips, images)
+VALUES (
+    'Edasdasdsadas',
+    'Técnica sdadasque divide entradas em partições válidas e inválidas para reduzir o número de casos de teste.',
+    'Exemplo: Para dsadasidade válida entre 18-65, partições seriam <18 (inválida), 18-65 (válida), >65 (inválida).',
+    'Certifique-se saddasdsade testar pelo menos um valor de cada partição.',
+    NULL
+);
+
+INSERT INTO Project (name, description, date)
+VALUES (
+    'AppTeste',
+    'Aplicativo para gerenciamento de tarefas com foco em produtividade.',
+    CURDATE()
+);
+
+INSERT INTO Project (name, description, date)
+VALUES (
+    'sadsate',
+    'Aplicads para gerenciamento de tarefas com foco em produtividade.',
+    CURDATE()
+);
+
+
+INSERT INTO User (username, senha, email, role)
+VALUES (
+    'joao123',
+    '123',
+    'joao@example.com',
+    'TESTER'
+);
+
+INSERT INTO User (username, senha, email, role)
+VALUES (
+    'paulo',
+    '123',
+    'joao1@example.com',
+    'TESTER'
 );

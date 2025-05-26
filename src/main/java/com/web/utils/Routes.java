@@ -24,6 +24,8 @@ public class Routes {
     // Access Denied Route
     public static final String ACCESS_DENIED_ROUTE = "/access-denied";
 
+    // Session Routes:
+    public static final String SESSION_ROUTE = "/sessions";
     // Projects:
     public static final String LIST_PROJECTS_ROUTE = "/projects";
 

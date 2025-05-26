@@ -96,6 +96,7 @@
 
         tr:hover {
             background-color: #f0e6ff;
+            cursor: pointer;
         }
 
         .image-gallery {
@@ -119,7 +120,8 @@
             color: #666;
             font-style: italic;
         }
-        .create-btn{
+
+        .create-btn {
             align-self: end;
         }
     </style>
@@ -135,51 +137,40 @@
 
     <p>Filtro:</p>
     <select id="FilterSelector" onchange="changeLanguage(this)" class="language-selector-custom" style="margin-right: 25px;">
-        <option value="name" <c:if test="${sort == 'name'}">selected</c:if>>
-            Ordem alfabética
-        </option>
-
-        <option value="date" <c:if test="${sort == 'date'}">selected</c:if>>
-            Data de criação
-        </option>
-
-        <option value="" <c:if test="${sort == null}">selected</c:if>>
-            Nenhum
-        </option>
+        <option value="name" <c:if test="${sort == 'name'}">selected</c:if>>Ordem alfabética</option>
+        <option value="date" <c:if test="${sort == 'date'}">selected</c:if>>Data de criação</option>
+        <option value="" <c:if test="${sort == null}">selected</c:if>>Nenhum</option>
     </select>
 
-    <br>
-    <br>
+    <br><br>
 
     <table>
         <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th>Data</th>
-        </tr>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Data</th>
+            </tr>
         </thead>
         <tbody>
-        <%
-            List<Project> projects = (List<Project>) request.getAttribute("projects");
-            if (projects != null && !projects.isEmpty()) {
-                for (Project project : projects) {
-        %>
-        <tr>
-            <td><%= project.getName() %></td>
-            <td><%= project.getDescription() %></td>
-            <td><%= project.getDate().toString() %></td>
-        </tr>
-        <%
-            }
-        } else {
-        %>
-        <tr>
-            <td colspan="3" class="no-data">
-                Nenhum projeto encontrado.
-            </td>
-        </tr>
-        <% } %>
+            <%
+                List<Project> projects = (List<Project>) request.getAttribute("projects");
+                if (projects != null && !projects.isEmpty()) {
+                    for (Project project : projects) {
+            %>
+            <tr onclick="window.location.href='<%= request.getContextPath() %>/sessions?action=listar_session&projectId=<%= project.getId() %>'">
+                <td><%= project.getName() %></td>
+                <td><%= project.getDescription() %></td>
+                <td><%= project.getDate().toString() %></td>
+            </tr>
+            <%
+                    }
+                } else {
+            %>
+            <tr>
+                <td colspan="3" class="no-data">Nenhum projeto encontrado.</td>
+            </tr>
+            <% } %>
         </tbody>
     </table>
 </div>
@@ -187,7 +178,6 @@
 <script>
     function changeLanguage(selectElement) {
         const selectedSort = selectElement.value;
-
         if (!selectedSort) {
             window.location.href = '${pageContext.request.contextPath}/projects';
         } else {
