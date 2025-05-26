@@ -212,7 +212,7 @@
                      <i class="fas fa-user-tie"></i>
                   </div>
                   <h3 class="card-title"><fmt:message key="user_card_title" /></h3>
-                  <p class="user-info">${sessionScope.loggedUser.username}</p>
+                  <p class="user-info">${sessionScope.loggedUser.name}</p>
                </div>
             </c:when>
 
