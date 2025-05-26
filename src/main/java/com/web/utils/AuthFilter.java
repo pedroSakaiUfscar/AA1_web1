@@ -53,6 +53,7 @@ public class AuthFilter implements Filter {
         roleProtectedRoutes.put(Routes.CREATE_STRATEGY_ROUTE, Arrays.asList("ADMIN"));
         roleProtectedRoutes.put(Routes.CREATE_PROJECT_ROUTE, Arrays.asList("ADMIN"));
         roleProtectedRoutes.put(Routes.LIST_USERS_ROUTE, Arrays.asList("ADMIN"));
+        roleProtectedRoutes.put(Routes.DELETE_USER_ROUTE, Arrays.asList("ADMIN"));
 
         // Rotas Autenticadas (Exigem login, mas qualquer role logada pode acessar) ---
         authenticatedRoutes = new HashSet<>();

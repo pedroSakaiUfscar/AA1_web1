@@ -13,6 +13,8 @@ public class Routes {
     public static final String REGISTER_ROUTE = "/register";
     public static final String LIST_USERS_ROUTE = "/list-users";
 
+    public static final String DELETE_USER_ROUTE = "/users/delete";
+
     // Strategy Routes:
 
     public static final String STRATEGIES_LIST_ROUTE = "/strategies";

@@ -2,6 +2,7 @@ package com.web.servlets.admin;
 
 import com.web.model.User;
 import com.web.dao.UserDAO;
+import com.web.utils.Error;
 import com.web.utils.Routes;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,6 +30,15 @@ public class ListUsersServlet extends HttpServlet {
             List<User> users = userDAO.getAll();
 
             request.setAttribute("users", users);
+
+            com.web.utils.Error error = new Error();
+            String errorType = request.getParameter("errorType");
+            if (errorType != null && errorType.equals("DELETE")) {
+                error.add(errorType);
+                request.getSession().setAttribute("mensagens", error);
+            } else {
+                request.getSession().setAttribute("mensagens", null);
+            }
 
             request.getRequestDispatcher("/WEB-INF/views/admin/listUsers.jsp").forward(request, response);
         } catch (Exception e) {

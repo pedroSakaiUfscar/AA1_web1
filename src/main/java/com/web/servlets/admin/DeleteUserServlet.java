@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebServlet("/users/delete")
+@WebServlet(Routes.DELETE_USER_ROUTE)
 public class DeleteUserServlet extends HttpServlet {
 
     private UserDAO userDAO;
@@ -38,19 +38,17 @@ public class DeleteUserServlet extends HttpServlet {
             return;
         }
 
+        String errorType = "";
         try {
             long userId = Long.parseLong(request.getParameter("userId"));
             userDAO.delete(userId);
             session.setAttribute("message", "User deleted successfully");
             response.sendRedirect(request.getContextPath() + "/list-users");
             return;
-        } catch (NumberFormatException e) {
-            session.setAttribute("error", "ID de usuário inválido");
-            e.printStackTrace();
         } catch (RuntimeException e) {
-            session.setAttribute("error", "Erro ao deletar usuário: " + e.getMessage());
-            e.printStackTrace();
+            errorType = "?errorType=DELETE";
         }
-        response.sendRedirect(request.getContextPath() + "/list-users");
+
+        response.sendRedirect(request.getContextPath() + "/list-users" + errorType);
     }
 }
