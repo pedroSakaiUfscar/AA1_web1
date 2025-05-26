@@ -166,6 +166,14 @@
                     </td>
                     <td>
                         <c:choose>
+                            <c:when test="${session.statusName == 'FINISHED'}">
+                                <span><fmt:message key="finished" /></span>
+                            </c:when>
+
+                            <c:when test="${sessionScope.loggedUser == null || sessionScope.loggedUser.name != session.testerName}">
+                                <span><fmt:message key="session_action_not_allowed" /></span>
+                            </c:when>
+
                             <c:when test="${session.statusName == 'CREATED'}">
                                 <form method="post" action="<%= request.getContextPath() %>/sessions">
                                     <input type="hidden" name="projectId" value="${param.projectId}" />
@@ -176,6 +184,7 @@
                                     </button>
                                 </form>
                             </c:when>
+
                             <c:when test="${session.statusName == 'IN_EXECUTION'}">
                                 <form method="post" action="<%= request.getContextPath() %>/sessions">
                                     <input type="hidden" name="projectId" value="${param.projectId}" />
@@ -186,6 +195,7 @@
                                     </button>
                                 </form>
                             </c:when>
+
                             <c:otherwise>
                                 <span><fmt:message key="finished" /></span>
                             </c:otherwise>

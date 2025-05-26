@@ -137,7 +137,9 @@
         <label for="description"><fmt:message key="label_bugs" /></label>
         <textarea id="description" name="description" required>Bug: </textarea>
 
-        <button type="submit"><fmt:message key="button_update_description" /></button>
+        <c:if test="${status == 'IN_EXECUTION'}">
+            <button type="submit"><fmt:message key="button_update_description" /></button>
+        </c:if>
     </form>
 
     <div class="current-description">
