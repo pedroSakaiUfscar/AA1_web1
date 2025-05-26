@@ -51,4 +51,24 @@ public class ProjectDAO {
         return listProjects;
     }
 
+    public boolean isUserAssociatedWithProject(long userId, long projectId) {
+        String sql = "SELECT COUNT(*) FROM ProjectUser WHERE usuario_id = ? AND projeto_id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, userId);
+            stmt.setLong(2, projectId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

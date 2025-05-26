@@ -106,6 +106,11 @@
         .create-btn {
             align-self: end;
         }
+        .button-container {
+            display: flex;
+            justify-content: flex-end; /* Alinha o conteúdo (o formulário) à direita */
+            margin: 20px 0; /* Adiciona um pouco de margem vertical */
+        }
     </style>
 </head>
 <body>
@@ -118,12 +123,6 @@
         <fmt:message key="list_back_button" />
     </a>
     <h1><fmt:message key="list_sessions_title" /></h1>
-
-    <c:if test="${sessionScope.loggedUser != null && sessionScope.loggedUser.role == 'TESTER'}">
-        <a href="<%= request.getContextPath() %>/sessions?projectId=${param.projectId}" class="button">
-            <fmt:message key="create_session_button" />
-        </a>
-    </c:if>
 
     <table>
         <thead>
@@ -213,6 +212,16 @@
             </c:if>
         </tbody>
     </table>
+    <c:if test="${sessionScope.loggedUser != null && sessionScope.loggedUser.role == 'TESTER' && isUserAssociated}">
+        <div class="button-container">
+            <form action="<%= request.getContextPath() %>/sessions" method="get">
+                <input type="hidden" name="projectId" value="${param.projectId}" />
+                <button type="submit" class="create-btn">
+                    <fmt:message key="create_title_session" />
+                </button>
+            </form>
+        </div>
+    </c:if>
 </div>
 
 <script>
