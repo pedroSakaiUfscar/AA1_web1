@@ -118,9 +118,12 @@
         <fmt:message key="list_back_button" />
     </a>
     <h1><fmt:message key="list_sessions_title" /></h1>
-    <a href="<%= request.getContextPath() %>/sessions?projectId=${param.projectId}" class="button">
-        <fmt:message key="create_session_button" />
-    </a>
+
+    <c:if test="${sessionScope.loggedUser != null && sessionScope.loggedUser.role == 'TESTER'}">
+        <a href="<%= request.getContextPath() %>/sessions?projectId=${param.projectId}" class="button">
+            <fmt:message key="create_session_button" />
+        </a>
+    </c:if>
 
     <table>
         <thead>
