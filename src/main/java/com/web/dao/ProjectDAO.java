@@ -1,9 +1,11 @@
 package com.web.dao;
 
+import com.web.bd.AcessaBD;
 import com.web.model.Project;
 import com.web.utils.Config;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,4 +73,48 @@ public class ProjectDAO {
         return false;
     }
 
+    public void insert(Project project, String[] usersIds) {
+        String sql = "INSERT INTO Project (name, description, date) VALUES (?, ?, ?)";
+
+        try (Connection con = AcessaBD.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, project.getName());
+            stmt.setString(2, project.getDescription());
+            stmt.setDate(3, Date.valueOf(LocalDate.now()));
+
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        long projectId = generatedKeys.getLong(1);
+                        project.setId(projectId);
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException("erro custom", e);
+                }
+
+                if (usersIds != null) {
+                    for (String userId : usersIds) {
+                        associateUser(project, userId);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao inserir projeto", e);
+        }
+    }
+
+    public void associateUser(Project project, String userId) {
+        String sql = "INSERT INTO ProjectUser (projeto_id, usuario_id) VALUES (?, ?)";
+
+        try (Connection con = AcessaBD.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setLong(1, project.getId());
+            stmt.setLong(2, Long.parseLong(userId));
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao associar usuario com projeto", e);
+        }
+    }
 }

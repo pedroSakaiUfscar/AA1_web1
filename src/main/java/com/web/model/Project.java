@@ -13,8 +13,17 @@ public class Project {
         this.date = date;
     }
 
+    public Project(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -28,4 +37,5 @@ public class Project {
     public java.sql.Date getDate() {
         return date;
     }
+
 }
