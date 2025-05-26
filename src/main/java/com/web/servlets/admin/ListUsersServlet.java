@@ -30,10 +30,7 @@ public class ListUsersServlet extends HttpServlet {
 
             request.setAttribute("users", users);
 
-//            response.setContentType("text/html;charset=UTF-8");
-
             request.getRequestDispatcher("/WEB-INF/views/admin/listUsers.jsp").forward(request, response);
-
         } catch (Exception e) {
             log("Erro ao listar usuários", e);
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,

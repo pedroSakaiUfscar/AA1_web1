@@ -29,4 +29,7 @@ public class Routes {
     // Projects:
     public static final String LIST_PROJECTS_ROUTE = "/projects";
 
+    public static final String CREATE_PROJECT_ROUTE = "/projects/create";
+
+
 }

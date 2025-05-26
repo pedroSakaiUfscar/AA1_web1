@@ -133,13 +133,13 @@
         <fmt:message key="list_back_button" />
     </a>
 
-    <h1>Listagem de Projetos</h1>
+    <h1><fmt:message key="list_projects_title" /></h1>
 
-    <p>Filtro:</p>
-    <select id="FilterSelector" onchange="changeLanguage(this)" class="language-selector-custom" style="margin-right: 25px;">
-        <option value="name" <c:if test="${sort == 'name'}">selected</c:if>>Ordem alfabética</option>
-        <option value="date" <c:if test="${sort == 'date'}">selected</c:if>>Data de criação</option>
-        <option value="" <c:if test="${sort == null}">selected</c:if>>Nenhum</option>
+    <p><fmt:message key="list_projects_filter" /></p>
+    <select id="FilterSelector" onchange="changeFilter(this)" class="language-selector-custom" style="margin-right: 25px;">
+        <option value="name" <c:if test="${sort == 'name'}">selected</c:if>><fmt:message key="list_projects_filter_name" /></option>
+        <option value="date" <c:if test="${sort == 'date'}">selected</c:if>><fmt:message key="list_projects_filter_date" /></option>
+        <option value="none" <c:if test="${sort == null || sort == 'none'}">selected</c:if>><fmt:message key="list_projects_filter_none" /></option>
     </select>
 
     <br><br>
@@ -147,9 +147,9 @@
     <table>
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Data</th>
+                <th><fmt:message key="name" /></th>
+                <th><fmt:message key="list_strategy_description" /></th>
+                <th><fmt:message key="date" /></th>
             </tr>
         </thead>
         <tbody>
@@ -168,15 +168,23 @@
                 } else {
             %>
             <tr>
-                <td colspan="3" class="no-data">Nenhum projeto encontrado.</td>
+                <td colspan="3" class="no-data"><fmt:message key="list_projects_empty" /></td>
             </tr>
             <% } %>
         </tbody>
     </table>
+
+    <c:if test="${sessionScope.loggedUser != null && sessionScope.loggedUser.role == 'ADMIN'}">
+        <form action="projects/create" method="get" style="display: flex; justify-content: flex-end; margin: 20px 0;">
+            <button type="submit" class="create-btn">
+                <fmt:message key="create_project_title" />
+            </button>
+        </form>
+    </c:if>
 </div>
 
 <script>
-    function changeLanguage(selectElement) {
+    function changeFilter(selectElement) {
         const selectedSort = selectElement.value;
         if (!selectedSort) {
             window.location.href = '${pageContext.request.contextPath}/projects';
