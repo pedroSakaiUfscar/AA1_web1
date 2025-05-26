@@ -139,6 +139,9 @@
     <select id="FilterSelector" onchange="changeFilter(this)" class="language-selector-custom" style="margin-right: 25px;">
         <option value="name" <c:if test="${sort == 'name'}">selected</c:if>><fmt:message key="list_projects_filter_name" /></option>
         <option value="date" <c:if test="${sort == 'date'}">selected</c:if>><fmt:message key="list_projects_filter_date" /></option>
+        **<c:if test="${sessionScope.loggedUser != null && sessionScope.loggedUser.role == 'TESTER'}">**
+        <option value="associated" <c:if test="${sort == 'associated'}">selected</c:if>>Meus Projetos</option>
+        **</c:if>**
         <option value="none" <c:if test="${sort == null || sort == 'none'}">selected</c:if>><fmt:message key="list_projects_filter_none" /></option>
     </select>
 
@@ -146,31 +149,31 @@
 
     <table>
         <thead>
-            <tr>
-                <th><fmt:message key="name" /></th>
-                <th><fmt:message key="list_strategy_description" /></th>
-                <th><fmt:message key="date" /></th>
-            </tr>
+        <tr>
+            <th><fmt:message key="name" /></th>
+            <th><fmt:message key="list_strategy_description" /></th>
+            <th><fmt:message key="date" /></th>
+        </tr>
         </thead>
         <tbody>
-            <%
-                List<Project> projects = (List<Project>) request.getAttribute("projects");
-                if (projects != null && !projects.isEmpty()) {
-                    for (Project project : projects) {
-            %>
-            <tr onclick="window.location.href='<%= request.getContextPath() %>/sessions?action=listar_session&projectId=<%= project.getId() %>'">
-                <td><%= project.getName() %></td>
-                <td><%= project.getDescription() %></td>
-                <td><%= project.getDate().toString() %></td>
-            </tr>
-            <%
-                    }
-                } else {
-            %>
-            <tr>
-                <td colspan="3" class="no-data"><fmt:message key="list_projects_empty" /></td>
-            </tr>
-            <% } %>
+        <%
+            List<Project> projects = (List<Project>) request.getAttribute("projects");
+            if (projects != null && !projects.isEmpty()) {
+                for (Project project : projects) {
+        %>
+        <tr onclick="window.location.href='<%= request.getContextPath() %>/sessions?action=listar_session&projectId=<%= project.getId() %>'">
+            <td><%= project.getName() %></td>
+            <td><%= project.getDescription() %></td>
+            <td><%= project.getDate().toString() %></td>
+        </tr>
+        <%
+            }
+        } else {
+        %>
+        <tr>
+            <td colspan="3" class="no-data"><fmt:message key="list_projects_empty" /></td>
+        </tr>
+        <% } %>
         </tbody>
     </table>
 
