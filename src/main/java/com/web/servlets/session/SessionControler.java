@@ -79,7 +79,7 @@ public class SessionControler extends HttpServlet {
 
         sessionDAO.insert(session);
 
-        response.sendRedirect(request.getContextPath() + Routes.LIST_PROJECTS_ROUTE);
+        response.sendRedirect(request.getContextPath() + Routes.SESSION_ROUTE + "?action=projectId&projectId=" + projetoId);
     }
 
     private void startSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
