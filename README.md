@@ -21,3 +21,12 @@ main -> webapp -> views -> contém as páginas JSP da aplicação <br />
 main -> resources <br />
   |-> messages_en_US.properties: contém todas as strings em inglês
   |-> messages_pt_BR.properties: contém todas as strings em português
+</pre>
+
+## Como rodar o projeto:
+1. Tenha o mysql instalado e configurado na máquina
+2. Copie o script em src/main/java/com/web/bd/script_bd e rode no mysql para criar o database'
+3. No arquivo Config em src/main/java/com/web/utils/Config.java, altere a variável DB_PASSWORD na linha 8 com sua senha do mysql
+4. Tenha o tomcat instalado e configurado na máquina, inicie seu servido
+5. Adicione o .war salvo em war/AA1.war na pasta webapps do tomcat ou no manager app dele faça deploy do .war (geralemente em http://localhost:8080/manager/html)
+6. Agora é só acessar o localhost + AA1! (Provavelmente http://localhost:8080/AA1/)

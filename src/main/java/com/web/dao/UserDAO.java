@@ -27,11 +27,11 @@ public class UserDAO {
     }
 
     public void insert(User usuario) {
-        String sql = "INSERT INTO User (username, email, senha, role) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO User (name, email, senha, role) VALUES (?, ?, ?, ?)";
         try (Connection conn = this.getConnection();
              PreparedStatement statement = conn.prepareStatement(sql)) {
 
-            statement.setString(1, usuario.getUsername());
+            statement.setString(1, usuario.getName());
             statement.setString(2, usuario.getEmail());
             statement.setString(3, usuario.getSenha());
             statement.setString(4, usuario.getRole());
@@ -51,11 +51,11 @@ public class UserDAO {
 
             while (resultSet.next()) {
                 long id = resultSet.getLong("id");
-                String username = resultSet.getString("username"); // <-- Ajustado
-                String email = resultSet.getString("email");       // <-- Ajustado
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
-                String role = resultSet.getString("role");         // <-- Ajustado
-                User usuario = new User(id, username, email, senha, role);
+                String role = resultSet.getString("role");
+                User usuario = new User(id, name, email, senha, role);
                 listaUsuarios.add(usuario);
             }
         } catch (SQLException e) {
@@ -83,11 +83,11 @@ public class UserDAO {
     }
 
     public void update(User usuario) {
-        String sql = "UPDATE User SET username = ?, email = ?, senha = ?, role = ? WHERE id = ?";
+        String sql = "UPDATE User SET name = ?, email = ?, senha = ?, role = ? WHERE id = ?";
         try (Connection conn = this.getConnection();
              PreparedStatement statement = conn.prepareStatement(sql)) {
 
-            statement.setString(1, usuario.getUsername());
+            statement.setString(1, usuario.getName());
             statement.setString(2, usuario.getEmail());
             statement.setString(3, usuario.getSenha());
             statement.setString(4, usuario.getRole());
@@ -108,11 +108,11 @@ public class UserDAO {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    String username = resultSet.getString("username");
+                    String name = resultSet.getString("name");
                     String email = resultSet.getString("email");
                     String senha = resultSet.getString("senha");
                     String role = resultSet.getString("role");
-                    usuario = new User(id, username, email, senha, role);
+                    usuario = new User(id, name, email, senha, role);
                 }
             }
         } catch (SQLException e) {
@@ -131,10 +131,10 @@ public class UserDAO {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     Long id = resultSet.getLong("id");
-                    String username = resultSet.getString("username");
+                    String name = resultSet.getString("name");
                     String senha = resultSet.getString("senha");
                     String role = resultSet.getString("role");
-                    usuario = new User(id, username, email, senha, role);
+                    usuario = new User(id, name, email, senha, role);
                 }
             }
         } catch (SQLException e) {

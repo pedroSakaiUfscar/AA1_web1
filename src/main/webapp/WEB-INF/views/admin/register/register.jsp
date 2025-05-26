@@ -169,8 +169,8 @@
 
 <form method="post" action="${pageContext.request.contextPath}/register">
     <div class="form-group">
-        <label for="usernameField"><fmt:message key="username" /></label>
-        <input type="text" id="usernameField" name="username" value="${param.username}" required/>
+        <label for="nameField"><fmt:message key="name" /></label>
+        <input type="text" id="nameField" name="name" value="${param.name}" required/>
     </div>
     <div class="form-group">
         <label for="emailField">E-mail</label>

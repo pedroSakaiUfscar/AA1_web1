@@ -28,16 +28,16 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Error error = new Error();
 
-        String username = request.getParameter("username");
+        String name = request.getParameter("name");
         String email = request.getParameter("email");
         String senha = request.getParameter("senha"); // Virá vazio para TESTER, preenchido para ADMIN
         String confirmarSenha = request.getParameter("confirmarSenha"); // Virá vazio para TESTER, preenchido para ADMIN
         String role = request.getParameter("role");
 
         // 2. Validação dos dados
-        if (username == null || username.trim().isEmpty()) {
+        if (name == null || name.trim().isEmpty()) {
             error.add("Nome de usuário não informado!");
-        } else if (username.trim().length() < 3) {
+        } else if (name.trim().length() < 3) {
             error.add("Nome de usuário deve ter no mínimo 3 caracteres!");
         }
 
@@ -74,9 +74,9 @@ public class RegisterServlet extends HttpServlet {
             }
             finalSenha = senha;
         } else if ("TESTER".equals(role)) {
-            // Para TESTER, a senha é o username
-            if (username != null && !username.trim().isEmpty()) {
-                finalSenha = username.trim();
+            // Para TESTER, a senha é o name
+            if (name != null && !name.trim().isEmpty()) {
+                finalSenha = name.trim();
             } else {
                 error.add("Nome de usuário não disponível para definir a senha do Testador.");
             }
@@ -85,7 +85,7 @@ public class RegisterServlet extends HttpServlet {
         // 3. Se houver erros, reenvia para o JSP com as mensagens
         if (error.isExisteErros()) {
             request.setAttribute("mensagens", error);
-            request.setAttribute("param.username", username);
+            request.setAttribute("param.name", name);
             request.setAttribute("param.email", email);
             request.setAttribute("param.role", role);
             if ("ADMIN".equals(role)) {
@@ -102,7 +102,7 @@ public class RegisterServlet extends HttpServlet {
         try {
             String hashedPassword = finalSenha; //substituir por hash real
 
-            User newUser = new User(username.trim(), email.trim(), hashedPassword, role.trim());
+            User newUser = new User(name.trim(), email.trim(), hashedPassword, role.trim());
             UserDAO dao = new UserDAO();
             dao.insert(newUser);
 
@@ -112,7 +112,7 @@ public class RegisterServlet extends HttpServlet {
         } catch (RuntimeException e) {
             error.add("Erro ao cadastrar usuário: " + e.getMessage());
             request.setAttribute("mensagens", error);
-            request.setAttribute("param.username", username);
+            request.setAttribute("param.name", name);
             request.setAttribute("param.email", email);
             request.setAttribute("param.role", role);
             if ("ADMIN".equals(role)) {
