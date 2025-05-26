@@ -54,9 +54,9 @@ public class SessionControler extends HttpServlet {
 
             request.setAttribute("session", session);
             request.setAttribute("projectId", projectId);
+            request.setAttribute("status", session.getStatus());
 
-            request.getRequestDispatcher("/WEB-INF/views/session_pages/session_description.jsp")
-                    .forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/session_pages/session_description.jsp").forward(request, response);
         } else if ("updateDescription".equals(action)) {
             String sessionIdParam = request.getParameter("sessionId");
 
@@ -66,6 +66,7 @@ public class SessionControler extends HttpServlet {
             TestSession updatedSession = sessionDAO.getById(sessionId);
 
             request.setAttribute("session", updatedSession);
+            request.setAttribute("status", updatedSession.getStatus());
 
             request.getRequestDispatcher("/WEB-INF/views/session_pages/session_description.jsp")
                     .forward(request, response);
