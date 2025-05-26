@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "CreateStrategyServlet", urlPatterns = {Routes.CREATE_PROJECT_ROUTE})
+@WebServlet(name = "CreateProjectServlet", urlPatterns = {Routes.CREATE_PROJECT_ROUTE})
 public class CreateProjectServlet extends HttpServlet {
 
     @Override
