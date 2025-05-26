@@ -106,7 +106,7 @@ public class SessionControler extends HttpServlet {
         if (obj instanceof User) {
             User user = (User) obj;
             idUsuario = user.getId();
-            testerName = user.getUsername();
+            testerName = user.getName();
         }
 
         long strategyId = Long.parseLong(request.getParameter("strategyId"));

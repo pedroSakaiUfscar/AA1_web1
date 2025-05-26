@@ -170,7 +170,7 @@
                                 <span><fmt:message key="finished" /></span>
                             </c:when>
 
-                            <c:when test="${sessionScope.loggedUser == null || sessionScope.loggedUser.username != session.testerName}">
+                            <c:when test="${sessionScope.loggedUser == null || sessionScope.loggedUser.name != session.testerName}">
                                 <span><fmt:message key="session_action_not_allowed" /></span>
                             </c:when>
 
