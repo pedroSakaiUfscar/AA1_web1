@@ -27,7 +27,7 @@ public class DeleteStrategyServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + Routes.STRATEGIES_LIST_ROUTE);
 
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao deletar estratégia", e);
+            response.sendRedirect(request.getContextPath() + Routes.STRATEGIES_LIST_ROUTE + "?errorType=DELETE");
         }
     }
 }

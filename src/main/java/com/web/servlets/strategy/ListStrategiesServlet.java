@@ -6,6 +6,7 @@ import java.util.List;
 import com.web.dao.StrategyDAO;
 import com.web.model.Strategy;
 import com.web.utils.*;
+import com.web.utils.Error;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,6 +24,16 @@ public class ListStrategiesServlet extends HttpServlet {
             List<Strategy> strategies = dao.getAll();
 
             request.setAttribute("strategies", strategies);
+
+            Error error = new Error();
+            String errorType = request.getParameter("errorType");
+            if (errorType != null && errorType.equals("DELETE")) {
+                error.add(errorType);
+                request.getSession().setAttribute("mensagens", error);
+            } else {
+                request.getSession().setAttribute("mensagens", null);
+            }
+
             request.getRequestDispatcher("/WEB-INF/views/strategy_pages/list.jsp").forward(request, response);
 
         } catch (Exception e) {

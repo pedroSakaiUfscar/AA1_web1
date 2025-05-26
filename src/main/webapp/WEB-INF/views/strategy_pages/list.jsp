@@ -140,6 +140,20 @@
         .delete-btn:active {
             transform: scale(0.9);
         }
+
+        #erro {
+            background-color: #ffe0e0;
+            border: 1px solid #ff9999;
+            color: #cc0000;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            word-wrap: break-word;
+            white-space: normal;
+        }
     </style>
 </head>
 <body>
@@ -150,6 +164,12 @@
     </a>
 
     <h1><fmt:message key="list_page_title" /></h1>
+
+    <c:if test="${mensagens != null && mensagens.existeErros && mensagens.erros[0] == 'DELETE'}">
+        <div id="erro">
+            <p><fmt:message key="list_delete_error" /></p>
+        </div>
+    </c:if>
 
     <table>
         <thead>
