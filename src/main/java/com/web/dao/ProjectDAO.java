@@ -33,6 +33,32 @@ public class ProjectDAO {
 
     }
 
+    // New method to get projects associated with a user
+    public List<Project> getAssociatedProjects(long userId) {
+        List<Project> listProjects = new ArrayList<>();
+        // SQL JOIN between Project and ProjectUser tables
+        String sql = "SELECT p.* FROM Project p JOIN ProjectUser pu ON p.id = pu.projeto_id WHERE pu.usuario_id = ? ORDER BY p.name ASC";
+        try (Connection conn = this.getConnection();
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+
+            statement.setLong(1, userId); // Set the user ID parameter
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    long id = resultSet.getLong("id");
+                    String name = resultSet.getString("name");
+                    String description = resultSet.getString("description");
+                    java.sql.Date date = resultSet.getDate("date");
+                    Project project = new Project(id, name, description, date);
+                    listProjects.add(project);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao listar projetos associados: " + e.getMessage(), e);
+        }
+        return listProjects;
+    }
+
+
     private List<Project> getAllByQuery(String sql) {
         List<Project> listProjects = new ArrayList<>();
         try (Connection conn = this.getConnection();

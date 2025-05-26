@@ -15,7 +15,7 @@ CREATE TABLE User (
 
 CREATE TABLE Project (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(10) NOT NULL,
+    name VARCHAR(50) NOT NULL,
     description VARCHAR(300) NOT NULL,
     date DATE NOT NULL,
     PRIMARY KEY (id)
