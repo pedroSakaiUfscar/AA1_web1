@@ -31,10 +31,10 @@ CREATE TABLE ProjectUser (
 
 CREATE TABLE Strategy (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
-    description VARCHAR(300) NOT NULL,
-    examples VARCHAR(1000) NOT NULL,
-    tips VARCHAR(300) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    description TEXT NOT NULL,
+    examples TEXT NOT NULL,
+    tips TEXT NOT NULL,
     images TEXT NULL,
     PRIMARY KEY (id)
 );
@@ -58,51 +58,64 @@ CREATE TABLE TestSession (
 );
 
 
-INSERT INTO Strategy (name, description, examples, tips, images)
-VALUES (
-    'Equivalence Partitioning',
-    'Técnica que divide entradas em partições válidas e inválidas para reduzir o número de casos de teste.',
-    'Exemplo: Para idade válida entre 18-65, partições seriam <18 (inválida), 18-65 (válida), >65 (inválida).',
-    'Certifique-se de testar pelo menos um valor de cada partição.',
-    NULL
-);
+INSERT INTO User (name, senha, email, role) VALUES
+('Ana', 'senha123', 'ana@test.com', 'ADMIN'),
+('Bruno', 'seguro456', 'bruno@test.com', 'TESTER'),
+('Carla', 'teste789', 'carla@test.com', 'TESTER');
 
-INSERT INTO Strategy (name, description, examples, tips, images)
-VALUES (
-    'Edasdasdsadas',
-    'Técnica sdadasque divide entradas em partições válidas e inválidas para reduzir o número de casos de teste.',
-    'Exemplo: Para dsadasidade válida entre 18-65, partições seriam <18 (inválida), 18-65 (válida), >65 (inválida).',
-    'Certifique-se saddasdsade testar pelo menos um valor de cada partição.',
-    NULL
-);
+INSERT INTO Project (name, description, date) VALUES
+('ETv1', 'Exploratory testing em jogos 2D com foco em bugs graves.', '2025-05-01'),
+('ETv2', 'Testes exploratórios em jogos 3D com estratégias diversas.', '2025-05-10');
 
-INSERT INTO Project (name, description, date)
-VALUES (
-    'AppTeste',
-    'Aplicativo para gerenciamento de tarefas com foco em produtividade.',
-    CURDATE()
-);
+INSERT INTO ProjectUser (projeto_id, usuario_id) VALUES
+(1, 1), (1, 2), (2, 2), (2, 3);
 
-INSERT INTO Project (name, description, date)
-VALUES (
-    'sadsate',
-    'Aplicads para gerenciamento de tarefas com foco em produtividade.',
-    CURDATE()
-);
+INSERT INTO Strategy (name, description, examples, tips, images) VALUES
+('Tour Bus',
+'O testador percorre o jogo como um passeio turístico, explorando recursos interessantes e retornando ao caminho principal.',
+'Explorar um nível e interagir com itens, inimigos e colecionáveis brevemente antes de avançar.',
+'Pense como um jogador completionista casual. Não se aprofunde, apenas explore.',
+'https://critical-gaming.com/storage/keyobstacle.jpg?__SQUARESPACE_CACHEVERSION=1257626756268'),
 
+('Exploratory Smoke Testing',
+'Testes aleatórios para verificar se as funcionalidades principais estão funcionando, sem seguir um roteiro.',
+'Tentar comandos improváveis, interações não planejadas e combinações estranhas.',
+'Faça perguntas como "e se eu...?" para guiar a exploração.',
+'https://media.moddb.com/images/articles/1/210/209725/Lasers.png'),
 
-INSERT INTO User (username, senha, email, role)
-VALUES (
-    'joao123',
-    '123',
-    'joao@example.com',
-    'TESTER'
-);
+('Crime Spree',
+'Tenta quebrar funcionalidades propositadamente, explorando vulnerabilidades.',
+'Forçar campos, sair do mapa, abusar de mecânicas.',
+'Pense como alguém tentando hackear o jogo. Mire nos pontos fracos.',
+NULL),
 
-INSERT INTO User (username, senha, email, role)
-VALUES (
-    'paulo',
-    '123',
-    'joao1@example.com',
-    'TESTER'
-);
+('Garbage Collectors',
+'Foca em atingir objetivos rapidamente, ignorando o resto. Inspira-se em speedruns.',
+'Correr direto até o fim do nível, ignorando inimigos e obstáculos laterais.',
+'Objetividade e velocidade são chave. Ajuda a encontrar atalhos ou falhas.',
+NULL),
+
+('Back Alley',
+'Explora caminhos alternativos e funcionalidades menos utilizadas do jogo.',
+'Investigar menus escondidos, caminhos secretos, consoles e cheats.',
+'Fuja do óbvio. Vá para o que jogadores comuns não acessam.',
+NULL),
+
+('User Interface Exploration',
+'Foca na exploração de elementos tradicionais de interface como menus, campos e configurações.',
+'Navegar entre menus, testar combinações em campos, mudar resolução e sons.',
+'Ideal para encontrar bugs clássicos. Verifique influências do estado do jogo nos menus.',
+NULL),
+
+('Bad Neighborhood',
+'Explora os arredores de bugs conhecidos em busca de falhas semelhantes.',
+'Se um bug ocorreu numa porta, testar outras portas e áreas relacionadas.',
+'Pense nos “vizinhos” do bug. Eles podem esconder falhas similares.',
+NULL);
+
+INSERT INTO TestSession (testerName, userId, strategyId, projetoId, duration, description, status, startDateTime, finishDateTime) VALUES
+('Bruno', 2, 1, 1, 15, 'Teste inicial com Tour Bus.', 'FINISHED', '2025-05-20 10:00:00', '2025-05-20 10:15:00'),
+('Carla', 3, 2, 2, 10, 'Testes aleatórios para avaliar estabilidade.', 'FINISHED', '2025-05-21 14:00:00', '2025-05-21 14:10:00'),
+('Ana', 1, 3, 1, 12, 'Tentativa de quebrar comportamentos específicos.', 'FINISHED', '2025-05-22 09:30:00', '2025-05-22 09:42:00'),
+('Bruno', 2, 6, 2, 20, 'Exploração de menus e opções gráficas.', 'IN_EXECUTION', '2025-05-25 15:00:00', NULL),
+('Carla', 3, 7, 2, 8, 'Testando área próxima a bug anterior.', 'CREATED', NULL, NULL);
