@@ -1,5 +1,6 @@
 package com.web.servlets.session;
 
+import com.web.dao.ProjectDAO;
 import com.web.dao.SessionDAO;
 import com.web.dao.StrategyDAO;
 import com.web.model.TestSession;
@@ -22,12 +23,15 @@ public class SessionControler extends HttpServlet {
 
     private SessionDAO sessionDAO;
     private StrategyDAO strategyDAO;
+    private ProjectDAO projectDAO;
 
     @Override
     public void init() throws ServletException {
         super.init();
         sessionDAO = new SessionDAO();
         strategyDAO = new StrategyDAO();
+        projectDAO = new ProjectDAO();
+
     }
 
     @Override
@@ -101,28 +105,43 @@ public class SessionControler extends HttpServlet {
 
     private void createSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Object obj = request.getSession().getAttribute("loggedUser");
-        long idUsuario = 0;
-        String testerName = "";
-        if (obj instanceof User) {
-            User user = (User) obj;
-            idUsuario = user.getId();
-            testerName = user.getName();
+
+        if (!(obj instanceof User)) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Usuário não autenticado");
+            return;
         }
 
-        long strategyId = Long.parseLong(request.getParameter("strategyId"));
-        long projetoId = Long.parseLong(request.getParameter("projetoId"));
-        int duration = Integer.parseInt(request.getParameter("duration"));
-        String description = request.getParameter("description");
+        User user = (User) obj;
+        long idUsuario = user.getId();
+        String testerName = user.getName();
 
-        TestSessionStatus status = TestSessionStatus.CREATED;
-        LocalDateTime creationDateTime = LocalDateTime.now();
+        try {
+            long strategyId = Long.parseLong(request.getParameter("strategyId"));
+            long projetoId = Long.parseLong(request.getParameter("projetoId"));
 
-        TestSession session = new TestSession(0, testerName, idUsuario, strategyId, projetoId, duration, description, status, creationDateTime, null, null);
+            // Verificação de associação com o projeto
+            if (!projectDAO.isUserAssociatedWithProject(idUsuario, projetoId)) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Usuário não associado a este projeto");
+                return;
+            }
 
-        sessionDAO.insert(session);
+            int duration = Integer.parseInt(request.getParameter("duration"));
+            String description = request.getParameter("description");
 
-        String redirectURL = request.getContextPath() + "/sessions?action=listar_session&projectId=" + projetoId;
-        response.sendRedirect(redirectURL);
+            TestSessionStatus status = TestSessionStatus.CREATED;
+            LocalDateTime creationDateTime = LocalDateTime.now();
+
+            TestSession session = new TestSession(0, testerName, idUsuario, strategyId, projetoId,
+                    duration, description, status, creationDateTime, null, null);
+
+            sessionDAO.insert(session);
+
+            String redirectURL = request.getContextPath() + "/sessions?action=listar_session&projectId=" + projetoId;
+            response.sendRedirect(redirectURL);
+
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parâmetros inválidos");
+        }
     }
 
     private void startSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -184,7 +203,8 @@ public class SessionControler extends HttpServlet {
     }
 
 
-    private void listSessionsByProject(HttpServletRequest request, HttpServletResponse response, String projectIdParam) throws ServletException, IOException {
+    private void listSessionsByProject(HttpServletRequest request, HttpServletResponse response, String projectIdParam)
+            throws ServletException, IOException {
 
         long projectId;
         try {
@@ -194,14 +214,20 @@ public class SessionControler extends HttpServlet {
             return;
         }
 
+        // Verificar se o usuário está associado ao projeto
+        User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+        boolean isAssociated = false;
+
+        if (loggedUser != null) {
+            isAssociated = projectDAO.isUserAssociatedWithProject(loggedUser.getId(), projectId);
+        }
+
         sessionDAO.updateExpiredSessionsByProject((int) projectId);
-
         List<TestSession> sessions = sessionDAO.getAllbyProjectID((int) projectId);
-
-
 
         request.setAttribute("sessions", sessions);
         request.setAttribute("projectId", projectId);
+        request.setAttribute("isUserAssociated", isAssociated); // Novo atributo
 
         request.getRequestDispatcher("/WEB-INF/views/session_pages/list_sessions.jsp").forward(request, response);
     }
